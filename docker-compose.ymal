@@ -1,4 +1,4 @@
-version: '1.0'
+version: '2.2'
 services:
   mysql:
     container_name: mysql
@@ -23,3 +23,5 @@ services:
     image: fundmngmt/app:1.0.0
     links:
       - mysql:mysql
+    depends_on:
+      - mysql
