@@ -21,6 +21,8 @@ services:
       context: .
       dockerfile: Dockerfile-app
     image: fundmngmt/app:1.0.0
+    ports:
+      - "8088:8088"
     links:
       - mysql:mysql
     depends_on:
