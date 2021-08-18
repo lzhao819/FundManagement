@@ -19,6 +19,10 @@
 -- Table structure for table `fund_managers`
 --
 
+CREATE database mydb;
+
+use mydb;
+
 DROP TABLE IF EXISTS `fund_managers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
