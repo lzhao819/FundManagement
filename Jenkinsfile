@@ -34,10 +34,10 @@ pipeline {
             echo 'FundManagementPipeline'
         }
         success{
-                    echo 'FundManagementPipeline Successfully Built'
+                    echo 'FundManagementPipeline Successfully Built！'
         }
         failure{
-                    echo 'FundManagementPipeline Failed'
+                    echo 'FundManagementPipeline Failed！'
         }
     }
 }
