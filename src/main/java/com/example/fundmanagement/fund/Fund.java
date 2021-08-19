@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import javax.persistence.*;
 import java.util.List;
 
-//test
 @Entity
 @Table(name = "funds")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "fund_id")
