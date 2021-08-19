@@ -13,7 +13,6 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                //remove existing container
 //                 sh "docker stop mysql"
 //                 sh "docker stop /app"
 //                 sh "docker rm mysql"
