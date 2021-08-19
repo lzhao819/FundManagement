@@ -26,11 +26,6 @@ pipeline {
         stage('Deploy Container To Openshift') {
               steps {
                 sh "oc login --username admin --password admin --insecure-skip-tls-verify=true"
-//                 sh "oc project ${projectName} || oc new-project ${projectName}"
-//                 sh "oc get service mysql || oc new-app mysql"
-//                 sh "oc delete all --selector app=${projectName} || echo 'Unable to delete all previous openshift resources'"
-//                 sh "oc new-app ${fundmngmt/app} -l version=${version}"
-//                 sh "oc expose svc/${projectName}"
               }
             }
     }
