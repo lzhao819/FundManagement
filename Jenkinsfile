@@ -19,11 +19,14 @@ pipeline {
             steps {
                 script {
                     def response = httpRequest 'http://devopsapac48.conygre.com:8080/positions'
-                    def json = new JsonSlurper().parseText(response.content)
+                    //def json = new JsonSlurper().parseText(response.content)
 
-                    echo "Status: ${response.status}"
+                    println("Status: "+response.status)
+                    println("Content: "+response.content)
 
-                    echo "Dogs: ${json.message.keySet()}"
+//                     echo "Status: ${response.status}"
+//
+//                     echo "Dogs: ${json.message.keySet()}"
                 }
             }
         }
