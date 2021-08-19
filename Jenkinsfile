@@ -12,23 +12,25 @@ pipeline {
                 sh "docker stop /app"
                 sh "docker rm mysql"
                 sh "docker rm /app"
-                sh "docker-compose up"
+//                 sh "docker-compose up"
+                sh "docker build -f Dockerfile-mysql -t fundmngmt/mysql ."
+                sh "docker build -f Dockerfile-app -t fundmngmt/app ."
                 }
         }
-        stage('Get Positions List') {
-            steps {
-                script {
-                    def response = httpRequest 'http://devopsapac48.conygre.com:8080/positions'
-                    //def json = new JsonSlurper().parseText(response.content)
-
-                    println("Status: "+response.status)
-                    println("Content: "+response.content)
-
-//                     echo "Status: ${response.status}"
+//         stage('Get Positions List') {
+//             steps {
+//                 script {
+//                     def response = httpRequest 'http://devopsapac48.conygre.com:8080/positions'
+//                     //def json = new JsonSlurper().parseText(response.content)
 //
-//                     echo "Dogs: ${json.message.keySet()}"
-                }
-            }
-        }
+//                     println("Status: "+response.status)
+//                     println("Content: "+response.content)
+//
+// //                     echo "Status: ${response.status}"
+// //
+// //                     echo "Dogs: ${json.message.keySet()}"
+//                 }
+//             }
+//         }
     }
 }
