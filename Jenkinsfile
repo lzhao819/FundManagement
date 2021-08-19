@@ -37,7 +37,7 @@ pipeline {
                     echo 'FundManagementPipeline Successfully Built！'
         }
         failure{
-                    echo 'FundManagementPipeline Failed！'
+                    echo 'FundManagementPipeline Failed'
         }
     }
 }
