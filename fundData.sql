@@ -19,7 +19,7 @@
 -- Table structure for table `fund_managers`
 --
 
-CREATE database mydb;
+CREATE DATABASE mydb;
 
 use mydb;
 
