@@ -6,7 +6,9 @@ pipeline {
     agent any
     stages {
         stage('Maven Build Jar File'){
-            echo "Done!!" //mvn package
+            steps{
+             echo "Done!!" //mvn package
+            }
         }
 
         stage('Build Docker Image') {
