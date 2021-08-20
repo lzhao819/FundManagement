@@ -12,7 +12,7 @@ The project is divided into five parts, each part is developed by one of our tea
 
 Jenkins admin/c0nygre
 MySQL root/
-Openshift
+Openshift 
 
 
 
