@@ -44,7 +44,7 @@ pipeline {
     }
     post{
         always{
-            echo 'FundManagementPipeline'
+            echo 'FundManagementPipeline!!'
         }
         success{
                     echo 'FundManagementPipeline Successfully Built！'
