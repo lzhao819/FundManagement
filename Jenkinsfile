@@ -22,11 +22,23 @@ pipeline {
                 }
         }
 
-        stage('Deploy Container To Openshift') {
+        stage('Deploy Mysql Container To Openshift') {
               steps {
                 sh "oc login --username admin --password admin --insecure-skip-tls-verify=true"
+                sh "oc project fundmngmt/mysql || oc new-project fundmngmt/mysql"
+                sh "oc delete all --selector app=fundmngmt/mysql || echo 'Unable to delete all previous openshift mysql resources'"
+                sh "oc expose svc/fundmngmt/mysql"
               }
             }
+        stage('Deploy App Container To Openshift') {
+                      steps {
+                        sh "oc login --username admin --password admin --insecure-skip-tls-verify=true"
+                        sh "oc project fundmngmt/app || oc new-project fundmngmt/app"
+                        sh "oc get service fundmngmt/mysql || oc new-app fundmngmt/mysql"
+                        sh "oc delete all --selector app=fundmngmt/mysql || echo 'Unable to delete all previous openshift mysql resources'"
+                        sh "oc expose svc/fundmngmt/app"
+                      }
+                    }
     }
     post{
         always{
