@@ -1,4 +1,4 @@
-package com.example.fundmanagement.positions;
+package com.example.fundmanagement.securities;
 
 import com.example.fundmanagement.FundManagementApplication;
 import org.junit.Assert;
@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -16,11 +17,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = FundManagementApplication.class)
-class PositionsControllerTest {
+class SecurityRestControllerTest {
 
     private MockMvc mockMvc;
 
@@ -28,7 +30,7 @@ class PositionsControllerTest {
     private WebApplicationContext webApplicationContext;
 
     @Autowired
-    private PositionsService positionsService;
+    private SecurityServiceImpl securityService;
 
     @BeforeEach
     void setUp() {
@@ -40,27 +42,42 @@ class PositionsControllerTest {
     }
 
     @Test
-    void getPositions()throws Exception  {
+    void getAllSecurities() throws Exception {
         MvcResult mvcResult = mockMvc
                 .perform(
-                        MockMvcRequestBuilders.get("/positions/1")
+                        MockMvcRequestBuilders.get("/securities")
                 )
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();
+        String responseString = mvcResult.getResponse().getContentAsString();
 
 
         Assert.assertEquals("wrong request",200,status);
-
+       // Assert.assertEquals("unexpecting result",securityService.getAllSecurities(),responseString);
     }
 
     @Test
-    void postNewPositions()throws Exception  {
+    void getSecurity()throws Exception {
+        MvcResult mvcResult = mockMvc
+                .perform(
+                        MockMvcRequestBuilders.get("/securities/1")
+                )
+                .andReturn();
+        int status = mvcResult.getResponse().getStatus();
+        String responseString = mvcResult.getResponse().getContentAsString();
+
+        Assert.assertEquals("wrong request",200,status);
+        Assert.assertEquals("unexpecting result",securityService.findSecurity(1).toString(),responseString);
+    }
+
+    @Test
+    void addSecurity() throws Exception{
         String requestbody = "{\"security_id\":10,\"symbol\":\"Test\"}";
         MvcResult mvcResult = mockMvc
                 .perform(
                         MockMvcRequestBuilders.post("/securities")
                                 .contentType(MediaType.APPLICATION_JSON).content(requestbody)
-                                .accept(MediaType.APPLICATION_JSON))
+                        .accept(MediaType.APPLICATION_JSON))
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();
 
@@ -68,10 +85,8 @@ class PositionsControllerTest {
         Assert.assertEquals("failed",200,status);
     }
 
-
-
     @Test
-    void updatePositions() throws Exception {
+    void modifySecurity() throws Exception{
         String requestbody = "{\"security_id\":10,\"symbol\":\"Test1\"}";
         MvcResult mvcResult = mockMvc
                 .perform(
@@ -84,16 +99,20 @@ class PositionsControllerTest {
 
         Assert.assertEquals("failed",200,status);
     }
+
     @Test
-    void deletePositions()throws Exception  {
+    void removeSecurity()throws Exception {
+
         MvcResult mvcResult = mockMvc
                 .perform(
                         MockMvcRequestBuilders.delete("/securities/10")
-                )
+                                )
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();
 
 
         Assert.assertEquals("failed",200,status);
     }
+
+
 }
