@@ -29,6 +29,14 @@ public class FundService {
         return fund.get();
     }
 
+    public Fund getByName(String fundName) {
+        Optional<Fund> fund = fundRepository.findByName(fundName);
+        if (fund.isEmpty()) {
+            throw new FundNameNotFoundException(fundName);
+        }
+        return fund.get();
+    }
+
     public void addFund(Fund newFund){
         Optional<Fund> existingFund = fundRepository.findById(newFund.getFund_id());
         if (existingFund.isPresent()){
@@ -69,6 +77,5 @@ public class FundService {
         }
 
     }
-
 
 }

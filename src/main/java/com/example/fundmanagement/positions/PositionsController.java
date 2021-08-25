@@ -47,4 +47,5 @@ public class PositionsController {
         positionsService.updatePositions(positionsId, updatedPositions);
 
     }
+
 }

@@ -23,7 +23,7 @@ public class Fund {
 
     @ManyToOne(optional = false,cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "employee_id", insertable=false, updatable=false)
-    @JsonIdentityReference(alwaysAsId = true)
+    //@JsonIdentityReference(alwaysAsId = true)
     private Manager managerInFund;
 
     @OneToMany(mappedBy = "fundInPosition")

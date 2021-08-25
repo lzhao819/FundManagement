@@ -8,5 +8,7 @@ import java.util.Optional;
 @Repository
 public interface FundRepository extends JpaRepository<Fund, Integer> {
 
-    Optional<Fund> findFundByName(String name);
+    //By default, Spring Data JPA will automatically parse the method name and create a query from it.
+    Optional<Fund> findByName(String fundName);
+    Optional<Fund> findFundByName(String fundName);
 }

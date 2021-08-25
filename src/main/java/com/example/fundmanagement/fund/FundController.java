@@ -16,7 +16,6 @@ public class FundController {
         this.fundService = fundService;
     }
 
-
     @GetMapping
     public List<Fund> getFunds(){
         return fundService.getFunds();
@@ -25,6 +24,12 @@ public class FundController {
     @GetMapping(path="{fundId}")
     public Fund getFund(@PathVariable("fundId") Integer id){
         return fundService.getFund(id);
+    }
+
+    //getByName
+    @GetMapping(path="/name/{fundName}")
+    public Fund getByName(@PathVariable("fundName") String fundName){
+        return fundService.getByName(fundName);
     }
 
     @PostMapping
