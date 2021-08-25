@@ -58,7 +58,9 @@ public class PositionsService {
     public void updatePositions(Integer positionsId, Positions updatedPositions) {
         Optional<Positions> positionsOptional = positionsRepository.findById(positionsId);
         if (positionsOptional.isEmpty()){
-            throw new IllegalArgumentException("Positions Not Found");
+            //throw new IllegalArgumentException("Positions Not Found");
+            addNewPositions(updatedPositions);
+            return;
         }
         Positions positions = positionsOptional.get();
         // Check PositionId
@@ -73,6 +75,9 @@ public class PositionsService {
             positions.getSecurityInPosition().setSymbol(updatedPositions.getSecurityInPosition().getSymbol());
         }
         // Update Quantity
+        if (updatedPositions.getQuantity() == 0){// if the updated quantity is 0, then delete this entry
+            deletePositions(positionsId);
+        }
         if (updatedPositions.getQuantity() != 0 && updatedPositions.getQuantity() >= 0){
             positions.setQuantity(updatedPositions.getQuantity());
         }
@@ -81,6 +86,6 @@ public class PositionsService {
                 !Objects.equals(updatedPositions.getDate_purchased(), positions.getDate_purchased())){
             positions.setDate_purchased(updatedPositions.getDate_purchased());
         }
-
     }
+
 }
