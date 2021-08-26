@@ -7,7 +7,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path="/positions")
-@CrossOrigin
 public class PositionsController {
 
     private final PositionsService positionsService;
