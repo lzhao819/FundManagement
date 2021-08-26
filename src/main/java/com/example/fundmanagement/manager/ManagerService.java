@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,5 +67,21 @@ public class ManagerService{
             oldManager.setFirstName(newManager.getFirstName());
             oldManager.setLastName(newManager.getLastName());
         }
+    }
+
+    public Integer getFundQuant(Integer id) {
+        return managerRepository.getFundQuant(id);
+    }
+
+    public Integer getSecurityQuant(Integer id) {
+        return managerRepository.getSecurityQuant(id);
+    }
+
+    public List<String> getSecurityQuantList(Integer id) {
+        return managerRepository.getSecurityQuantList(id);
+    }
+
+    public List<String> getSecurityQuantDateList(Integer id) {
+        return managerRepository.getSecurityQuantDateList(id);
     }
 }

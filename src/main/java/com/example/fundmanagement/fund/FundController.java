@@ -48,7 +48,7 @@ public class FundController {
     }
 
     //Get security and quantity in a certain fund
-    @GetMapping(path="/{fundId}/security")
+    @GetMapping(path="{fundId}/security")
     public List<String> getSecurityQuant(@PathVariable("fundId") Integer fundId){
         return fundService.getSecurityQuant(fundId);
     }
