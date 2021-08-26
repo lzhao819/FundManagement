@@ -24,7 +24,7 @@ public class Positions {
     @Column(name="security_id")
     private Integer security_id;
 
-    @ManyToOne(optional = false,cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false,cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name="security_id",insertable = false,updatable = false)
     @JsonIdentityReference(alwaysAsId = true)
     private Security securityInPosition;

@@ -4,6 +4,7 @@ import com.example.fundmanagement.fund.FundAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,8 @@ public class SecurityServiceImpl {
     public SecurityServiceImpl(SecurityRepository securityRepository) {
         this.securityRepository = securityRepository;
     }
+
+   public int findSecurityBySymbol(String symbol){return securityRepository.findSecurityBySymbol(symbol).get().getSecurity_id();}
 
     //findAll
     public List<Security> getAllSecurities(){return securityRepository.findAll();}
@@ -35,9 +38,9 @@ public class SecurityServiceImpl {
     //add
     @Transactional
     public void addSecurity(Security security) {
-            Optional<Security> existingSecurity = securityRepository.findById(security.getSecurity_id());
+            Optional<Security> existingSecurity = securityRepository.findSecurityBySymbol(security.getSymbol());
             if (existingSecurity.isPresent()){
-                throw new FundAlreadyExistsException(security.getSymbol());
+                throw new SecurityAlreadyExistsException(security.getSymbol());
             }
             securityRepository.save(security);
 
@@ -72,9 +75,5 @@ public class SecurityServiceImpl {
                 }
                 oldSecurity.setSymbol(newSymbol);
             }
-
-
     }
-
-
 }

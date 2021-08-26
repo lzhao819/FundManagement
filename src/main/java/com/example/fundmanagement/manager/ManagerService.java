@@ -1,5 +1,6 @@
 package com.example.fundmanagement.manager;
 
+import com.example.fundmanagement.securities.SecurityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,8 @@ import java.util.Optional;
 @Service
 public class ManagerService{
     private final ManagerRepository managerRepository;
+    @Autowired
+    private SecurityServiceImpl securityService;
 
     @Autowired
     public ManagerService(ManagerRepository managerRepository) {
@@ -66,5 +69,39 @@ public class ManagerService{
             oldManager.setFirstName(newManager.getFirstName());
             oldManager.setLastName(newManager.getLastName());
         }
+    }
+
+    public Integer getFundQuant(Integer id) {
+        return managerRepository.getFundQuant(id);
+    }
+
+    public Integer getSecurityQuant(Integer id) {
+        return managerRepository.getSecurityQuant(id);
+    }
+
+    public List<String> getSecurityQuantList(Integer id) {
+        List<String> list = managerRepository.getSecurityQuantList(id);
+        for(int i=0;i<list.size();i++){
+            String s = list.get(i);
+            String[] column = s.split(",");
+            //c[0] -- id
+            column[0] = securityService.findSecurity(Integer.parseInt(column[0])).getSymbol();
+            String withName = String.join(",",column);
+            list.set(i,withName);
+        }
+        return list;
+    }
+
+    public List<String> getSecurityQuantDateList(Integer id) {
+        List<String> list = managerRepository.getSecurityQuantDateList(id);
+        for(int i=0;i<list.size();i++){
+            String s = list.get(i);
+            String[] column = s.split(",");
+            //c[0] -- id
+            column[2] = securityService.findSecurity(Integer.parseInt(column[2])).getSymbol();
+            String withName = String.join(",",column);
+            list.set(i,withName);
+        }
+        return list;
     }
 }

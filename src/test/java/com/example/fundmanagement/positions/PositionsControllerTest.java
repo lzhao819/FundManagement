@@ -1,47 +1,121 @@
 package com.example.fundmanagement.positions;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import com.example.fundmanagement.FundManagementApplication;
+import com.example.fundmanagement.securities.Security;
+import com.example.fundmanagement.securities.SecurityAlreadyExistsException;
+import com.example.fundmanagement.securities.SecurityServiceImpl;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Calendar;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(SpringExtension.class)
-@WebMvcTest(PositionsController.class)
-public class PositionsControllerTest {
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = FundManagementApplication.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+class PositionsControllerTest {
 
-    @MockBean
-    PositionsService positionsService;
-
-    @MockBean
-    PositionsRepository positionsRepository;
+    private MockMvc mockMvc;
 
     @Autowired
-    MockMvc mockMvc;
+    private WebApplicationContext webApplicationContext;
 
-    List<Positions> defaultPositions = List.of(
-            new Positions(1,200,
-                    LocalDate.of(1970, 1, 1),1,1),
-        new Positions(2,400,
-                LocalDate.of(1971, 2, 2),2,2)
-    );
+    @Autowired
+    private PositionsService positionsService;
 
+    @Autowired
+    private SecurityServiceImpl securityService;
+
+
+    @BeforeEach
+    void setUp() {
+
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+
+    }
+
+    @AfterEach
+    void tearDown() {
+    }
+
+
+    @Order(6)
     @Test
-    void getPositions() throws Exception{
-        when(positionsService.getPositions(1)).thenReturn(defaultPositions.get(0));
+    void getPositions()throws Exception  {
+        MvcResult mvcResult = mockMvc
+                .perform(
+                        MockMvcRequestBuilders.get("/positions/1")
+                )
+                .andReturn();
+        int status = mvcResult.getResponse().getStatus();
 
-        mockMvc.perform(
-                MockMvcRequestBuilders.get("/positions/1"))
-                .andExpect(status().isOk());
+
+        Assert.assertEquals("wrong request",200,status);
+
+    }
+
+    @Order(7)
+    @Test
+    void postNewPositions()throws Exception  {
+
+        String requestbody ="Test";
+        MvcResult mvcResult = mockMvc
+                .perform(
+                        MockMvcRequestBuilders.post("/securities")
+                                .contentType(MediaType.APPLICATION_JSON).content(requestbody)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andReturn();
+        int status = mvcResult.getResponse().getStatus();
+
+
+        Assert.assertEquals("failed",200,status);
+    }
+
+    @Order(8)
+    @Test
+    void updatePositions() throws Exception {
+        int security_id = securityService.findSecurityBySymbol("Test");
+        String requestbody = "Test2";
+        String url = "/securities/"+security_id;
+        System.out.println(url);
+        MvcResult mvcResult = mockMvc
+                .perform(
+                        MockMvcRequestBuilders.put(url)
+                                .contentType(MediaType.APPLICATION_JSON).content(requestbody)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andReturn();
+        int status = mvcResult.getResponse().getStatus();
+
+
+        Assert.assertEquals("failed",200,status);
+    }
+    @Order(9)
+    @Test
+    void deletePositions()throws Exception  {
+        int security_id = securityService.findSecurityBySymbol("Test2");
+        String url = "/securities/"+security_id;
+
+        MvcResult mvcResult = mockMvc
+                .perform(
+                        MockMvcRequestBuilders.delete(url)
+                )
+                .andReturn();
+        int status = mvcResult.getResponse().getStatus();
+
+
+        Assert.assertEquals("failed",200,status);
     }
 }

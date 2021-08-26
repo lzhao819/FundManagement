@@ -28,8 +28,8 @@ public class SecurityRestController {
     }
 
     @PostMapping
-    public void addSecurity(@RequestBody Security security){
-        securityService.addSecurity(security);
+    public void addSecurity(@RequestBody String symbol){
+        Security security = new Security(symbol);securityService.addSecurity(security);
     }
 
     @DeleteMapping(path="{securityId}")
@@ -41,4 +41,5 @@ public class SecurityRestController {
     public void modifySecurity(@PathVariable Integer securityId, @RequestBody String description){
         securityService.modifyDescription(securityId, description);
     }
+
 }
