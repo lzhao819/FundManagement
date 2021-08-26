@@ -24,7 +24,7 @@ public class Manager {
     private String lastName;
 
     @OneToMany(mappedBy = "managerInFund")
-    //@JsonIdentityReference(alwaysAsId = true)
+    @JsonIdentityReference(alwaysAsId = true)
     private List<Fund> funds;
 
     public Manager() {

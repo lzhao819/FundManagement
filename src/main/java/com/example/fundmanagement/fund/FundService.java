@@ -78,4 +78,7 @@ public class FundService {
 
     }
 
+    public List<String> getSecurityQuant(Integer id) {
+        return fundRepository.getSecurityQuant(id);
+    }
 }

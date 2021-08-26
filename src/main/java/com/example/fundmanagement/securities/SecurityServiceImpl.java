@@ -4,6 +4,7 @@ import com.example.fundmanagement.fund.FundAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -72,8 +73,9 @@ public class SecurityServiceImpl {
                 }
                 oldSecurity.setSymbol(newSymbol);
             }
-
-
+    }
+    public List<String>findSecurityByManagerId(Integer id){
+        return securityRepository.findSecurityByManagerId(id);
     }
 
 

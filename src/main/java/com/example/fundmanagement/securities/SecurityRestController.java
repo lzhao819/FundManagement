@@ -41,4 +41,11 @@ public class SecurityRestController {
     public void modifySecurity(@PathVariable Integer securityId, @RequestBody String description){
         securityService.modifyDescription(securityId, description);
     }
+
+    //return a list of (securityName, total quantity) filtered  by ManagerId
+    @GetMapping(path="/manager/{managerId}")
+        public List<String> getSecurityByManagerName(@PathVariable("managerId") Integer id){
+            return securityService.findSecurityByManagerId(id);
+        }
+
 }

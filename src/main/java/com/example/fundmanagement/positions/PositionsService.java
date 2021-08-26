@@ -66,12 +66,12 @@ public class PositionsService {
             //TODO Use custom exception.
             throw new IllegalStateException("Positions ID in path and in request body are different.");
         }
-        // Update SecurityName
-        if (updatedPositions.getSecurityInPosition().getSymbol() != null &&
-                !Objects.equals(updatedPositions.getSecurityInPosition().getSymbol(), positions.getSecurityInPosition().getSymbol()) &&
-                updatedPositions.getSecurityInPosition().getSymbol().length() > 0){
-            positions.getSecurityInPosition().setSymbol(updatedPositions.getSecurityInPosition().getSymbol());
-        }
+//        // Update SecurityName
+//        if (updatedPositions.getSecurityInPosition().getSymbol() != null &&
+//                !Objects.equals(updatedPositions.getSecurityInPosition().getSymbol(), positions.getSecurityInPosition().getSymbol()) &&
+//                updatedPositions.getSecurityInPosition().getSymbol().length() > 0){
+//            positions.getSecurityInPosition().setSymbol(updatedPositions.getSecurityInPosition().getSymbol());
+//        }
         // Update Quantity
         if (updatedPositions.getQuantity() != 0 && updatedPositions.getQuantity() >= 0){
             positions.setQuantity(updatedPositions.getQuantity());
