@@ -54,7 +54,7 @@ public class ManagerController {
     }
 
     //某个manager名下list of (securityName, total quantity)
-    @GetMapping(path="/securityQuantList/{managerId}/")
+    @GetMapping(path="{managerId}/securityQuantList/")
     public List<String> getSecurityQuantList(@PathVariable("managerId") Integer id){
         return managerService.getSecurityQuantList(id);
     }
