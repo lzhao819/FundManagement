@@ -2,9 +2,7 @@ package com.example.fundmanagement.securities;
 
 import com.example.fundmanagement.FundManagementApplication;
 import org.junit.Assert;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +20,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = FundManagementApplication.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class SecurityRestControllerTest {
 
     private MockMvc mockMvc;
@@ -41,6 +40,7 @@ class SecurityRestControllerTest {
     void tearDown() {
     }
 
+    @Order(1)
     @Test
     void getAllSecurities() throws Exception {
         MvcResult mvcResult = mockMvc
@@ -55,7 +55,7 @@ class SecurityRestControllerTest {
         Assert.assertEquals("wrong request",200,status);
        // Assert.assertEquals("unexpecting result",securityService.getAllSecurities(),responseString);
     }
-
+    @Order(2)
     @Test
     void getSecurity()throws Exception {
         MvcResult mvcResult = mockMvc
@@ -69,7 +69,7 @@ class SecurityRestControllerTest {
         Assert.assertEquals("wrong request",200,status);
         Assert.assertEquals("unexpecting result",securityService.findSecurity(1).toString(),responseString);
     }
-
+    @Order(3)
     @Test
     void addSecurity() throws Exception{
         String requestbody ="Test";
@@ -84,7 +84,7 @@ class SecurityRestControllerTest {
 
         Assert.assertEquals("failed",200,status);
     }
-
+    @Order(4)
     @Test
     void modifySecurity() throws Exception{
         int security_id = securityService.findSecurityBySymbol("Test");
@@ -102,7 +102,7 @@ class SecurityRestControllerTest {
 
         Assert.assertEquals("failed",200,status);
     }
-
+    @Order(5)
     @Test
     void removeSecurity()throws Exception {
         int security_id = securityService.findSecurityBySymbol("Test2");

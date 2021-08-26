@@ -40,7 +40,7 @@ public class SecurityServiceImpl {
     public void addSecurity(Security security) {
             Optional<Security> existingSecurity = securityRepository.findSecurityBySymbol(security.getSymbol());
             if (existingSecurity.isPresent()){
-                throw new FundAlreadyExistsException(security.getSymbol());
+                throw new SecurityAlreadyExistsException(security.getSymbol());
             }
             securityRepository.save(security);
 
