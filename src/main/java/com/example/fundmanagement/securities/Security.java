@@ -4,6 +4,7 @@ import com.example.fundmanagement.positions.Positions;
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -65,9 +66,13 @@ public class Security {
 
     @Override
     public String toString() {
-        return "Security{" +
-                "security_id=" + security_id +
-                ", symbol='" + symbol + '\'' +
+        List position_id = new ArrayList();
+        for (Positions position:positions){
+            position_id.add(position.getPosition_id());
+        }
+        return "{\"security_id\":" + security_id +
+                ",\"symbol\":" +"\"" +symbol +"\""+
+                ",\"positions\":"+ position_id.toString().replace(" ","")+
                 '}';
     }
 }
