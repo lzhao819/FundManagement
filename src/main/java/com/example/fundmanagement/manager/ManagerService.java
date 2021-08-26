@@ -1,16 +1,18 @@
 package com.example.fundmanagement.manager;
 
+import com.example.fundmanagement.securities.SecurityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ManagerService{
     private final ManagerRepository managerRepository;
+    @Autowired
+    private SecurityServiceImpl securityService;
 
     @Autowired
     public ManagerService(ManagerRepository managerRepository) {
@@ -82,6 +84,6 @@ public class ManagerService{
     }
 
     public List<String> getSecurityQuantDateList(Integer id) {
-        return managerRepository.getSecurityQuantDateList(id);
+         return managerRepository.getSecurityQuantDateList(id);
     }
 }

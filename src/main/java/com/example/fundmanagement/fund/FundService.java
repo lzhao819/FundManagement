@@ -1,16 +1,19 @@
 package com.example.fundmanagement.fund;
 
-
+import com.example.fundmanagement.securities.SecurityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import com.example.fundmanagement.securities.SecurityRestController;
 
 @Service
 public class FundService {
     private final FundRepository fundRepository;
+    @Autowired
+    private SecurityServiceImpl securityService;
 
     @Autowired
     public FundService(FundRepository fundRepository) {
@@ -79,6 +82,15 @@ public class FundService {
     }
 
     public List<String> getSecurityQuant(Integer id) {
-        return fundRepository.getSecurityQuant(id);
+        List<String> list = fundRepository.getSecurityQuant(id);
+        for(int i=0;i<list.size();i++){
+            String s = list.get(i);
+            String[] column = s.split(",");
+            //c[0] -- id
+            column[0] = securityService.findSecurity(Integer.parseInt(column[0])).getSymbol();
+            String withName = String.join(",",column);
+            list.set(i,withName);
+        }
+        return list;
     }
 }
