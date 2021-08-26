@@ -69,11 +69,11 @@ public class PositionsService {
             throw new IllegalStateException("Positions ID in path and in request body are different.");
         }
         // Update SecurityName
-        if (updatedPositions.getSecurityInPosition().getSymbol() != null &&
-                !Objects.equals(updatedPositions.getSecurityInPosition().getSymbol(), positions.getSecurityInPosition().getSymbol()) &&
-                updatedPositions.getSecurityInPosition().getSymbol().length() > 0){
-            positions.getSecurityInPosition().setSymbol(updatedPositions.getSecurityInPosition().getSymbol());
-        }
+//        if (updatedPositions.getSecurityInPosition().getSymbol() != null &&
+//                !Objects.equals(updatedPositions.getSecurityInPosition().getSymbol(), positions.getSecurityInPosition().getSymbol()) &&
+//                updatedPositions.getSecurityInPosition().getSymbol().length() > 0){
+//            positions.getSecurityInPosition().setSymbol(updatedPositions.getSecurityInPosition().getSymbol());
+//        }
         // Update Quantity
         if (updatedPositions.getQuantity() == 0){// if the updated quantity is 0, then delete this entry
             deletePositions(positionsId);
@@ -82,10 +82,10 @@ public class PositionsService {
             positions.setQuantity(updatedPositions.getQuantity());
         }
         // Update Date
-        if (updatedPositions.getDate_purchased() != null &&
-                !Objects.equals(updatedPositions.getDate_purchased(), positions.getDate_purchased())){
-            positions.setDate_purchased(updatedPositions.getDate_purchased());
-        }
+//        if (updatedPositions.getDate_purchased() != null &&
+//                !Objects.equals(updatedPositions.getDate_purchased(), positions.getDate_purchased())){
+//            positions.setDate_purchased(updatedPositions.getDate_purchased());
+//        }
     }
 
 }
