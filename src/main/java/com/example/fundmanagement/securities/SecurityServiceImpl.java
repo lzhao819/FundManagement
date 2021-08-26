@@ -76,9 +76,4 @@ public class SecurityServiceImpl {
                 oldSecurity.setSymbol(newSymbol);
             }
     }
-    public List<String>findSecurityByManagerId(Integer id){
-        return securityRepository.findSecurityByManagerId(id);
-    }
-
-
 }

@@ -7,7 +7,8 @@ pipeline {
     stages {
         stage('Maven Build Jar File'){
             steps{
-             echo "Done!!" //mvn package
+                sh"mvn package"
+//              echo "Done!!" //mvn package
             }
         }
 

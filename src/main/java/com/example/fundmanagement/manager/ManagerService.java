@@ -1,5 +1,6 @@
 package com.example.fundmanagement.manager;
 
+import com.example.fundmanagement.securities.SecurityServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,8 @@ import java.util.Optional;
 @Service
 public class ManagerService{
     private final ManagerRepository managerRepository;
+    @Autowired
+    private SecurityServiceImpl securityService;
 
     @Autowired
     public ManagerService(ManagerRepository managerRepository) {
@@ -66,5 +69,21 @@ public class ManagerService{
             oldManager.setFirstName(newManager.getFirstName());
             oldManager.setLastName(newManager.getLastName());
         }
+    }
+
+    public Integer getFundQuant(Integer id) {
+        return managerRepository.getFundQuant(id);
+    }
+
+    public Integer getSecurityQuant(Integer id) {
+        return managerRepository.getSecurityQuant(id);
+    }
+
+    public List<String> getSecurityQuantList(Integer id) {
+        return managerRepository.getSecurityQuantList(id);
+    }
+
+    public List<String> getSecurityQuantDateList(Integer id) {
+         return managerRepository.getSecurityQuantDateList(id);
     }
 }
