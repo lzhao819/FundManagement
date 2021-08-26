@@ -20,6 +20,8 @@ public class SecurityServiceImpl {
         this.securityRepository = securityRepository;
     }
 
+   public int findSecurityBySymbol(String symbol){return securityRepository.findSecurityBySymbol(symbol).get().getSecurity_id();}
+
     //findAll
     public List<Security> getAllSecurities(){return securityRepository.findAll();}
 
@@ -36,7 +38,7 @@ public class SecurityServiceImpl {
     //add
     @Transactional
     public void addSecurity(Security security) {
-            Optional<Security> existingSecurity = securityRepository.findById(security.getSecurity_id());
+            Optional<Security> existingSecurity = securityRepository.findSecurityBySymbol(security.getSymbol());
             if (existingSecurity.isPresent()){
                 throw new FundAlreadyExistsException(security.getSymbol());
             }

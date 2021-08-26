@@ -72,7 +72,7 @@ class SecurityRestControllerTest {
 
     @Test
     void addSecurity() throws Exception{
-        String requestbody = "{\"security_id\":10,\"symbol\":\"Test\"}";
+        String requestbody ="Test";
         MvcResult mvcResult = mockMvc
                 .perform(
                         MockMvcRequestBuilders.post("/securities")
@@ -87,10 +87,13 @@ class SecurityRestControllerTest {
 
     @Test
     void modifySecurity() throws Exception{
-        String requestbody = "{\"security_id\":10,\"symbol\":\"Test1\"}";
+        int security_id = securityService.findSecurityBySymbol("Test");
+        String requestbody = "Test2";
+        String url = "/securities/"+security_id;
+        System.out.println(url);
         MvcResult mvcResult = mockMvc
                 .perform(
-                        MockMvcRequestBuilders.put("/securities/10")
+                        MockMvcRequestBuilders.put(url)
                                 .contentType(MediaType.APPLICATION_JSON).content(requestbody)
                                 .accept(MediaType.APPLICATION_JSON))
                 .andReturn();
@@ -102,10 +105,12 @@ class SecurityRestControllerTest {
 
     @Test
     void removeSecurity()throws Exception {
+        int security_id = securityService.findSecurityBySymbol("Test2");
+        String url = "/securities/"+security_id;
 
         MvcResult mvcResult = mockMvc
                 .perform(
-                        MockMvcRequestBuilders.delete("/securities/10")
+                        MockMvcRequestBuilders.delete(url)
                                 )
                 .andReturn();
         int status = mvcResult.getResponse().getStatus();
