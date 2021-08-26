@@ -80,10 +80,28 @@ public class ManagerService{
     }
 
     public List<String> getSecurityQuantList(Integer id) {
-        return managerRepository.getSecurityQuantList(id);
+        List<String> list = managerRepository.getSecurityQuantList(id);
+        for(int i=0;i<list.size();i++){
+            String s = list.get(i);
+            String[] column = s.split(",");
+            //c[0] -- id
+            column[0] = securityService.findSecurity(Integer.parseInt(column[0])).getSymbol();
+            String withName = String.join(",",column);
+            list.set(i,withName);
+        }
+        return list;
     }
 
     public List<String> getSecurityQuantDateList(Integer id) {
-         return managerRepository.getSecurityQuantDateList(id);
+        List<String> list = managerRepository.getSecurityQuantDateList(id);
+        for(int i=0;i<list.size();i++){
+            String s = list.get(i);
+            String[] column = s.split(",");
+            //c[0] -- id
+            column[2] = securityService.findSecurity(Integer.parseInt(column[2])).getSymbol();
+            String withName = String.join(",",column);
+            list.set(i,withName);
+        }
+        return list;
     }
 }
