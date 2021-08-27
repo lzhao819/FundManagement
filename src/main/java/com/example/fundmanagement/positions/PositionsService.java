@@ -13,6 +13,7 @@ import java.util.Optional;
 public class PositionsService {
     private final PositionsRepository positionsRepository;
     private final FundRepository fundRepository;
+    private Integer lastId;
 
     @Autowired
     public PositionsService(PositionsRepository positionsRepository,FundRepository fundRepository) {
@@ -32,7 +33,8 @@ public class PositionsService {
         return positions.get();
     }
 
-    public void addNewPositions(Positions newPositions) {
+    @Transactional
+    public int addNewPositions(Positions newPositions) {
         Optional<Positions> existingPositions = positionsRepository.findById(newPositions.getPosition_id());
         if(existingPositions.isPresent()){
             throw new PositionAlreadyExistsException(newPositions.getPosition_id());
@@ -42,9 +44,12 @@ public class PositionsService {
             throw new IllegalArgumentException("Cannot post to a none existing fund");
         }
 
-        positionsRepository.save(newPositions);
+        Positions lastPosition = positionsRepository.save(newPositions);
+        lastId = lastPosition.getPosition_id();
+        return lastId;
     }
 
+    @Transactional
     public void deletePositions(Integer id) {
         if(positionsRepository.existsById(id)) {
             positionsRepository.deleteById(id);
@@ -83,4 +88,5 @@ public class PositionsService {
         }
 
     }
+
 }

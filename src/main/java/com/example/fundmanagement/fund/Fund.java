@@ -41,6 +41,12 @@ public class Fund {
         this.positions = positions;
     }
 
+    public Fund(Integer fund_id, String name, Integer employee_id) {
+        this.fund_id = fund_id;
+        this.name = name;
+        this.employee_id = employee_id;
+    }
+
     public Integer getFund_id() {
         return fund_id;
     }

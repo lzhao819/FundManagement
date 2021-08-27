@@ -30,8 +30,8 @@ public class PositionsController {
 
     //add new position to a fund
     @PostMapping
-    public void postNewPositions(@RequestBody Positions newPositions){
-        positionsService.addNewPositions(newPositions);
+    public int postNewPositions(@RequestBody Positions newPositions){
+        return positionsService.addNewPositions(newPositions);
     }
 
     //delete a position
