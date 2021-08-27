@@ -8,7 +8,7 @@ pipeline {
         stage('Maven Build Jar File'){
             steps{
                 //sh"mvn package"
-//              echo "Done!!" //mvn package
+             echo "Done!!"
             }
         }
 
@@ -25,7 +25,7 @@ pipeline {
 
         stage('Deploy Mysql Container To Openshift') {
               steps {
-//                 sh "oc login --username admin --password admin --insecure-skip-tls-verify=true"
+                sh "oc login --username admin --password admin --insecure-skip-tls-verify=true"
 // //                 sh "oc project fund || oc new-project fund"
 //                 sh "oc delete all --selector app=fund || echo 'Unable to delete all previous openshift fund resources'"
 //                 sh "oc new-app fundmngmt/mysql "
