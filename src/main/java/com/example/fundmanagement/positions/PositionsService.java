@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -52,41 +51,44 @@ public class PositionsService {
     @Transactional
     public void deletePositions(Integer id) {
         if(positionsRepository.existsById(id)) {
+            System.out.println("This " + id + " will be deleted.");
             positionsRepository.deleteById(id);
+            System.out.println("This " + id + " has been deleted.");
         }
         else{
             throw new IllegalArgumentException("Positions Not Found");
         }
     }
 
+
     @Transactional
     public void updatePositions(Integer positionsId, Positions updatedPositions) {
         Optional<Positions> positionsOptional = positionsRepository.findById(positionsId);
         if (positionsOptional.isEmpty()){
-            throw new IllegalArgumentException("Positions Not Found");
+            //throw new IllegalArgumentException("Positions Not Found");
+            addNewPositions(updatedPositions);
+            return;
         }
         Positions positions = positionsOptional.get();
         // Check PositionId
-        if (updatedPositions.getPosition_id() != null && updatedPositions.getPosition_id() != positions.getPosition_id()){
-            //TODO Use custom exception.
+        if (updatedPositions.getPosition_id() != null && !updatedPositions.getPosition_id().equals(positions.getPosition_id())){
             throw new IllegalStateException("Positions ID in path and in request body are different.");
         }
+        // Update SecurityName
 //        // Update SecurityName
+
 //        if (updatedPositions.getSecurityInPosition().getSymbol() != null &&
 //                !Objects.equals(updatedPositions.getSecurityInPosition().getSymbol(), positions.getSecurityInPosition().getSymbol()) &&
 //                updatedPositions.getSecurityInPosition().getSymbol().length() > 0){
 //            positions.getSecurityInPosition().setSymbol(updatedPositions.getSecurityInPosition().getSymbol());
 //        }
         // Update Quantity
+        if (updatedPositions.getQuantity() == 0){// if the updated quantity is 0, then delete this entry
+            deletePositions(positions.getPosition_id());
+        }
         if (updatedPositions.getQuantity() != 0 && updatedPositions.getQuantity() >= 0){
             positions.setQuantity(updatedPositions.getQuantity());
         }
-        // Update Date
-        if (updatedPositions.getDate_purchased() != null &&
-                !Objects.equals(updatedPositions.getDate_purchased(), positions.getDate_purchased())){
-            positions.setDate_purchased(updatedPositions.getDate_purchased());
-        }
-
     }
 
 }
