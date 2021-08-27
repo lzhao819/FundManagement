@@ -29,7 +29,7 @@ pipeline {
 // //                 sh "oc project fund || oc new-project fund"
 //                 sh "oc delete all --selector app=fund || echo 'Unable to delete all previous openshift fund resources'"
 //                 sh "oc new-app fundmngmt/mysql "
-//                 sh "oc expose svc/mysql"
+//                 sh "oc expose svc/mysql!"
               }
             }
     }
